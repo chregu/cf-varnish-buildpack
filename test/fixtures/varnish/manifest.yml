@@ -3,10 +3,10 @@ applications:
 - name: varnish-test-change-this
   memory: 512M
   instances: 1
-  buildpack: https://github.com/chregu/varnish-buildpack.git
-  # buildpack: varnish_buildpack
+  # buildpack: https://github.com/chregu/varnish-buildpack.git
+  buildpack: varnish_buildpack
 
-  env:
+#  env:
     # if not set, it takes the memory limit for the app
     # VARNISH_MEMORY_LIMIT: 256m
 
