@@ -9,5 +9,5 @@ cd pcre-$pcre_version/
 ./configure --prefix=$build
 make
 make install
-ldconfig # this is important otherwise nginx will compile but fail to load
+ldconfig # this is important otherwise varnish will compile but fail to load (not sure, copied from staticfile buildpack)
 

@@ -23,12 +23,6 @@ compile_varnish_tgz="$compile_buildpack_dir/vendor/varnish-$varnish_version.tar.
 cd $build_dir
 
 
-# if using root dir, then Staticfile* files would be accessible by nginx
-if [[ -f public/Staticfile ]]; then
-  echo "Moving Staticfile away from public access" | indent
-  mv public/Staticfile* .
-fi
-
 status "Setting up varnish"
 tar xzf $compile_varnish_tgz
 
