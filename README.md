@@ -7,7 +7,7 @@ You need to create your Varnish configuration file(s) in the directory _etc/_ an
 
 
 ```
-cf push my-varnish -m 128M -b https://github.com/chregu/varnish-buildpack.git
+cf push my-varnish -m 128M -b https://github.com/chregu/cf-varnish-buildpack.git
 ```
 
 and it should soon be available on Cloud Foundry.
@@ -24,7 +24,7 @@ By default, this varnish uses _-s malloc,$MEMORY_LIMIT_, where $MEMORY_LIMIT is 
     VARNISH_MEMORY_LIMIT: 256m
 ```
 
-The default values used for starting varnishd can be seen in [boot.sh](https://github.com/chregu/varnish-buildpack/blob/master/bin/boot.sh). If you want to change those, you can copy _boot.sh_ to your app root dir and set new values. (Maybe we'll make those adjustable via env variable later as well)
+The default values used for starting varnishd can be seen in [boot.sh](https://github.com/chregu/cf-varnish-buildpack/blob/master/bin/boot.sh). If you want to change those, you can copy _boot.sh_ to your app root dir and set new values. (Maybe we'll make those adjustable via env variable later as well)
 
 
 Administrator Upload
