@@ -10,8 +10,8 @@ build_dir=$1
 cache_dir=$2
 
 # Version
-#nginx_version="1.5.10"
-nginx_version="1.7.4"
+#varnish_version="1.5.10"
+varnish_version="3.0.6"
 
 compile_buildpack_dir=$(cd $(dirname $0); cd ..; pwd)
 compile_buildpack_bin=$compile_buildpack_dir/bin
@@ -19,23 +19,9 @@ compile_buildpack_bin=$compile_buildpack_dir/bin
 # Load some convenience functions like status(), echo(), and indent()
 source $compile_buildpack_dir/bin/common.sh
 
-compile_nginx_tgz="$compile_buildpack_dir/vendor/nginx-$nginx_version.tar.gz"
+compile_varnish_tgz="$compile_buildpack_dir/vendor/varnish-$varnish_version.tar.gz"
 cd $build_dir
 
-# Alternate root location (default is root of project) for html/js/css
-# root: dist/
-if [[ "$(grep root: Staticfile)X" != "X" ]]; then
-  root_dir=$(grep root: Staticfile | sed -e 's/^root: *//')
-  status "Root folder $root_dir"
-else
-  status "Using root folder"
-fi
-root_dir=${root_dir:-.}
-
-status "Copying project files into public/"
-mkdir -p $cache_dir/public
-mv $root_dir/* $cache_dir/public
-mv $cache_dir/public .
 
 # if using root dir, then Staticfile* files would be accessible by nginx
 if [[ -f public/Staticfile ]]; then
@@ -43,30 +29,11 @@ if [[ -f public/Staticfile ]]; then
   mv public/Staticfile* .
 fi
 
-status "Setting up nginx"
-tar xzf $compile_nginx_tgz
-cp -f $compile_buildpack_dir/conf/nginx.conf nginx/conf/nginx.conf
-cp -f $compile_buildpack_dir/conf/mime.types nginx/conf/mime.types
+status "Setting up varnish"
+tar xzf $compile_varnish_tgz
 
-[[ -f $build_dir/public/nginx.conf ]] && mv $build_dir/public/nginx.conf nginx/conf/nginx.conf
-[[ -f $build_dir/public/mime.types ]] && mv $build_dir/public/mime.types nginx/conf/mime.types
+status "Copying config files into etc/varnish/"
 
-if [[ -f Staticfile.auth ]]; then
-  status "Enabling basic authentication"
-  mv Staticfile.auth nginx/conf/.htpasswd
-  cat nginx/conf/.htpasswd | indent
-  echo
-  protip "Learn about basic authentication" "https://github.com/drnic/staticfile-buildpack#basic-authentication"
-fi
-
-# Enable directory index
-if [[ "$(grep directory: Staticfile)X" != "X" ]]; then
-  status "Enabling directory index for folders without index.html files"
-  touch nginx/conf/.enable_directory_index
-fi
-
-# [[ -f public/Procfile ]] && mv public/Procfile .
-# echo "-----> Ensuring manifest.yml & stackato.yml aren't available in public/"
-# rm -f public/{manifest,stackato}.yml
+cp -r $build_dir/etc/* varnish/etc/varnish/
 
 cp $compile_buildpack_bin/boot.sh .

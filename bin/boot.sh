@@ -13,23 +13,15 @@
 # ------------------------------------------------------------------------------------------------
 
 export APP_ROOT=$HOME
-export LD_LIBRARY_PATH=$APP_ROOT/nginx/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$APP_ROOT/varnish/lib:$LD_LIBRARY_PATH
 
-conf_file=$APP_ROOT/nginx/conf/nginx.conf
-if [ -f $APP_ROOT/public/nginx.conf ]
-then
-  conf_file=$APP_ROOT/public/nginx.conf
+
+if [ -z "$VARNISH_MEMORY_LIMIT" ]; then
+    VARNISH_MEMORY_LIMIT=$MEMORY_LIMIT
 fi
 
-mv $conf_file $APP_ROOT/nginx/conf/orig.conf
-erb $APP_ROOT/nginx/conf/orig.conf > $APP_ROOT/nginx/conf/nginx.conf
+echo $VARNISH_MEMORY_LIMIT > /home/vcap/tmp/memorylimit.txt
 
-# ------------------------------------------------------------------------------------------------
-
-touch $APP_ROOT/nginx/logs/access.log
-touch $APP_ROOT/nginx/logs/error.log
-
-(tail -f -n 0 $APP_ROOT/nginx/logs/*.log &)
-exec $APP_ROOT/nginx/sbin/nginx -p $APP_ROOT/nginx -c $APP_ROOT/nginx/conf/nginx.conf
-
+# TODO, Make MEMORY_LIMIT adjustable, this now comes from CF itself
+exec $APP_ROOT/varnish/sbin/varnishd -n /home/vcap/tmp/varnish -F -f $APP_ROOT/varnish/etc/varnish/default.vcl -a 0.0.0.0:$VCAP_APP_PORT -t 120 -w 50,1000,120 -s malloc,$VARNISH_MEMORY_LIMIT -T 127.0.0.1:6082 -p http_resp_hdr_len=32768 2>&1
 # ------------------------------------------------------------------------------------------------
