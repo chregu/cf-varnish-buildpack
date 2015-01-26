@@ -21,6 +21,16 @@ RUN bash /root/compile_pcre.sh
 ADD compile_varnish.sh /root/
 RUN bash /root/compile_varnish.sh
 
+ADD compile_vmod_statsd.sh /root/
+RUN bash /root/compile_vmod_statsd.sh
+
+ADD compile_vmod_basicauth.sh /root/
+RUN bash /root/compile_vmod_basicauth.sh
+
+ADD compile_vmod_timers.sh /root/
+RUN bash /root/compile_vmod_timers.sh
+
+
 
 ADD cleanup.sh /root/
 RUN bash /root/cleanup.sh
