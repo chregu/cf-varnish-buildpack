@@ -12,6 +12,10 @@ cf push my-varnish -m 128M -b https://github.com/chregu/cf-varnish-buildpack.git
 
 and it should soon be available on Cloud Foundry.
 
+## You need Varnish and PHP in one buildpack?
+Head over to my fork of the PHP buildpack which adds varnish to that: [https://github.com/chregu/cf-php-varnish-buildpack](https://github.com/chregu/cf-php-varnish-buildpack)
+
+
 Configuration
 =============
 
