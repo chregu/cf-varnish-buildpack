@@ -18,5 +18,5 @@ cp $src/varnish-$varnish_version/{LICENSE,README} $build/share/doc/varnish
 # Archive it all up
 mkdir -p $target
 cd $build
-cd ..
-tar -zcvpf $target/varnish-$varnish_version.tar.gz varnish/
+cd ../varnish/
+tar -zcvpf $target/varnish-$varnish_version.tar.gz .

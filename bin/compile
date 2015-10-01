@@ -24,6 +24,8 @@ cd $build_dir
 
 
 status "Setting up varnish"
+mkdir varnish
+cd varnish
 tar xzf $compile_varnish_tgz
 
 status "Copying config files into etc/varnish/"
