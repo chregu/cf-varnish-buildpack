@@ -11,6 +11,6 @@ cd varnish-$varnish_version
 export PCRE_CFLAGS=-I$build/include
 export PCRE_LIBS="-lpcre -L$build/lib"
 
-./configure --localstatedir=/tmp/ --prefix=$build --with-pcre-config=$build/pcre-config
+./configure --localstatedir=/home/vcap/tmp/ --prefix=$build --with-pcre-config=$build/pcre-config
 make
 make install
