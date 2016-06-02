@@ -1,5 +1,5 @@
 pcre_version=8.35
-varnish_version=3.0.7
+varnish_version=4.1.2
 
 src=~/src
 build=/app/varnish

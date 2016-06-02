@@ -13,7 +13,7 @@ tar -xzf vmod-basicauth-1.3.tar.gz
 cd vmod-basicauth-1.3
 
 
-./configure VARNISHSRC=$src/varnish-$varnish_version --prefix=$build  --with-vmoddir=$build/lib/varnish/vmods/
+./configure VARNISHSRC=$src/varnish-$varnish_version --prefix=$build    --enable-debugging-symbols --with-vmoddir=$build/lib/varnish/vmods/
 make
 make install
-libtool --finish /app/varnish/lib/varnish/vmods/
+#libtool --finish /app/varnish/lib/varnish/vmods/
