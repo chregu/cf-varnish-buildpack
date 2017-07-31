@@ -13,7 +13,7 @@ find $build/lib/ -name "*.a" -exec rm {} \;
 find $build/lib/ -name "*.la" -exec rm {} \;
 
 mkdir -p $build/share/doc/varnish
-cp $src/varnish-$varnish_version/{LICENSE,README} $build/share/doc/varnish
+cp $src/varnish-$varnish_version/LICENSE $build/share/doc/varnish
 
 # Archive it all up
 mkdir -p $target

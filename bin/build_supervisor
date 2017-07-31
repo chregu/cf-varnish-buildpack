@@ -1,0 +1,1 @@
+docker run --rm -v $(pwd):/root/cf ubuntu:14.04 bash /root/cf/bin/docker/build_supervisor.sh

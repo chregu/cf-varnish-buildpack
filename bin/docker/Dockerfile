@@ -15,11 +15,11 @@ WORKDIR /root
 
 ADD config.sh /root/
 
-ADD compile_pcre.sh /root/
-RUN bash /root/compile_pcre.sh
-
 ADD compile_varnish.sh /root/
 RUN bash /root/compile_varnish.sh
+
+RUN apt-get install -fy libtool-bin
+
 
 ADD compile_vmod_statsd.sh /root/
 RUN bash /root/compile_vmod_statsd.sh
@@ -34,7 +34,7 @@ RUN bash /root/compile_vmod_timers.sh
 
 ADD cleanup.sh /root/
 RUN bash /root/cleanup.sh
-
+RUN apt-get install -fy gdb nano
 
 #RUN bash /root/build_varnish_in_docker.sh
 
