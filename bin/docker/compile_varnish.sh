@@ -3,8 +3,8 @@ set -e
 . config.sh
 
 cd $src
-wget --no-check-certificate https://repo.varnish-cache.org/source/varnish-$varnish_version.tar.gz
-tar -xvzf varnish-$varnish_version.tar.gz
+wget http://varnish-cache.org/_downloads/varnish-$varnish_version.tgz
+tar -xvzf varnish-$varnish_version.tgz
 cd varnish-$varnish_version
 
 
